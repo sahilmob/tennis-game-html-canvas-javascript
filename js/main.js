@@ -32,13 +32,19 @@ function move() {
     }
 }
 
-function draw() {
+// Draw rectangle function
+function drawRect(leftX, leftY, width, height, color) {
     //set the fill of the background to black
-    ctx.fillStyle = 'black';
+    ctx.fillStyle = color;
     //set background dimensions
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-    ctx.fillStyle = 'white';
-    ctx.fillRect(0, (canvas.height / 2) - 30, 10, 100);
-    ctx.fillStyle = 'white';
-    ctx.fillRect(ballX, 100, 10, 10);
+    ctx.fillRect(leftX, leftY, width, height);
+}
+
+function draw() {
+    // Draw the canvas background
+    drawRect(0, 0, canvas.width, canvas.height, 'black')
+        // Draw the paddle on the left side
+    drawRect(0, (canvas.height / 2) - 30, 10, 100, 'white')
+        // Draw the ball
+    drawRect(ballX, 100, 10, 10, 'white')
 }
