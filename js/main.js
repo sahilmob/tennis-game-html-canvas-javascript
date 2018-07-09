@@ -1,7 +1,9 @@
 var canvas;
 var ctx;
 var ballX = 50;
-var ballSpeedX = 5;
+var ballY = 50;
+var ballSpeedX = 10;
+var ballSpeedY = 4;
 
 
 // make sure not to do any thing before page finish loading
@@ -21,6 +23,8 @@ window.onload = function() {
 
 function move() {
     ballX = ballX + ballSpeedX;
+    ballY = ballY + ballSpeedY;
+
     // if the ball position equals the canvas width, flip the direction by flipping the ballSpeedX var. 
     if (ballX > canvas.width) {
         ballSpeedX = -ballSpeedX;
@@ -28,6 +32,14 @@ function move() {
     // if the ball position equals the canvas starting point from the left, flip the direction by flipping the ballSpeedX var. 
     if (ballX < 0) {
         ballSpeedX = -ballSpeedX;
+    }
+    // if the ball position equals the canvas hight, flip the direction by flipping the ballSpeedY var. 
+    if (ballY > canvas.height) {
+        ballSpeedY = -ballSpeedY;
+    }
+    // if the ball position equals the canvas starting point from the top, flip the direction by flipping the ballSpeedY var. 
+    if (ballY < 0) {
+        ballSpeedY = -ballSpeedY;
     }
 }
 
@@ -55,5 +67,5 @@ function draw() {
         // Draw the paddle on the left side
     drawRect(0, (canvas.height / 2) - 30, 10, 100, 'white')
         // Draw the ball
-    drawCircle(ballX, 100, 10, 0);
+    drawCircle(ballX, ballY, 10, 0);
 }
