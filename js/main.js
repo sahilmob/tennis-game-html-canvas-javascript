@@ -39,13 +39,13 @@ function drawRect(leftX, leftY, width, height, color) {
     ctx.fillRect(leftX, leftY, width, height);
 }
 
-function drawCircle() {
+function drawCircle(centerX, centerY, radius, color) {
     // set the fill of the circle
-    ctx.fillStyle = 'white';
+    ctx.fillStyle = color;
     // start path
     ctx.beginPath();
     // set the circle path
-    ctx.arc(ballX, 100, 10, 0, Math.PI * 2, true);
+    ctx.arc(centerX, centerY, radius, 0, Math.PI * 2, true);
     ctx.fill();
 }
 
@@ -55,5 +55,5 @@ function draw() {
         // Draw the paddle on the left side
     drawRect(0, (canvas.height / 2) - 30, 10, 100, 'white')
         // Draw the ball
-    drawCircle();
+    drawCircle(ballX, 100, 10, 0);
 }
