@@ -19,7 +19,6 @@ window.onload = function() {
 
 }
 
-
 function move() {
     ballX = ballX + ballSpeedX;
     // if the ball position equals the canvas width, flip the direction by flipping the ballSpeedX var. 
@@ -40,11 +39,21 @@ function drawRect(leftX, leftY, width, height, color) {
     ctx.fillRect(leftX, leftY, width, height);
 }
 
+function drawCircle() {
+    // set the fill of the circle
+    ctx.fillStyle = 'white';
+    // start path
+    ctx.beginPath();
+    // set the circle path
+    ctx.arc(ballX, 100, 10, 0, Math.PI * 2, true);
+    ctx.fill();
+}
+
 function draw() {
     // Draw the canvas background
     drawRect(0, 0, canvas.width, canvas.height, 'black')
         // Draw the paddle on the left side
     drawRect(0, (canvas.height / 2) - 30, 10, 100, 'white')
         // Draw the ball
-    drawRect(ballX, 100, 10, 10, 'white')
+    drawCircle();
 }
