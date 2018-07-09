@@ -4,7 +4,21 @@ var ballX = 50;
 var ballY = 50;
 var ballSpeedX = 10;
 var ballSpeedY = 4;
+var paddle1Y = 250;
+const PADDLE_HEIGHT = 100;
 
+// calculate mouse position
+function calcMousePos(e) {
+    var rect = canvas.getBoundingClientRect();
+    var root = document.documentElement;
+    var mouseX = e.clientX - rect.left - root.scrollLeft;
+    var mouseY = e.clientY - rect.top - root.scrollTop;
+
+    return {
+        x: mouseX,
+        y: mouseY
+    };
+}
 
 // make sure not to do any thing before page finish loading
 window.onload = function() {
@@ -15,10 +29,14 @@ window.onload = function() {
     //Calculate the frequency depending on the intended fps
     var framesPerSecond = 30;
     setInterval(function() {
-        move();
-        draw();
-    }, 1000 / framesPerSecond)
-
+            move();
+            draw();
+        }, 1000 / framesPerSecond)
+        // add event listener to mouse move to fire the calcMousePos
+    canvas.addEventListener('mousemove', function(e) {
+        var mousePos = calcMousePos(e);
+        paddle1Y = mousePos.y - (PADDLE_HEIGHT / 2);
+    });
 }
 
 function move() {
@@ -65,7 +83,7 @@ function draw() {
     // Draw the canvas background
     drawRect(0, 0, canvas.width, canvas.height, 'black')
         // Draw the paddle on the left side
-    drawRect(0, (canvas.height / 2) - 30, 10, 100, 'white')
+    drawRect(0, paddle1Y, 10, PADDLE_HEIGHT, 'white')
         // Draw the ball
     drawCircle(ballX, ballY, 10, 0);
 }
