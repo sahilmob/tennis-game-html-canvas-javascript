@@ -5,7 +5,9 @@ var ballY = 50;
 var ballSpeedX = 10;
 var ballSpeedY = 4;
 var paddle1Y = 250;
+var paddle2Y = 250;
 const PADDLE_HEIGHT = 100;
+const PADDLE_THICKNESS = 10;
 
 // calculate mouse position
 function calcMousePos(e) {
@@ -22,21 +24,27 @@ function calcMousePos(e) {
 
 // make sure not to do any thing before page finish loading
 window.onload = function() {
-    //fetch canvas from the dom
-    canvas = document.getElementById('gameCanvas');
-    //get drawing context on the canvas
-    ctx = canvas.getContext('2d');
-    //Calculate the frequency depending on the intended fps
-    var framesPerSecond = 30;
-    setInterval(function() {
-            move();
-            draw();
-        }, 1000 / framesPerSecond)
-        // add event listener to mouse move to fire the calcMousePos
-    canvas.addEventListener('mousemove', function(e) {
-        var mousePos = calcMousePos(e);
-        paddle1Y = mousePos.y - (PADDLE_HEIGHT / 2);
-    });
+        //fetch canvas from the dom
+        canvas = document.getElementById('gameCanvas');
+        //get drawing context on the canvas
+        ctx = canvas.getContext('2d');
+        //Calculate the frequency depending on the intended fps
+        var framesPerSecond = 30;
+        setInterval(function() {
+                move();
+                draw();
+            }, 1000 / framesPerSecond)
+            // add event listener to mouse move to fire the calcMousePos
+        canvas.addEventListener('mousemove', function(e) {
+            var mousePos = calcMousePos(e);
+            paddle1Y = mousePos.y - (PADDLE_HEIGHT / 2);
+        });
+    }
+    // rest the ball position
+function ballReset() {
+    ballSpeedX = -ballSpeedX;
+    ballX = canvas.width / 2;
+    ballY = canvas.height / 2;
 }
 
 function move() {
@@ -47,9 +55,14 @@ function move() {
     if (ballX > canvas.width) {
         ballSpeedX = -ballSpeedX;
     }
-    // if the ball position equals the canvas starting point from the left, flip the direction by flipping the ballSpeedX var. 
+
     if (ballX < 0) {
-        ballSpeedX = -ballSpeedX;
+        // if the ball hits the paddle, flip the direction by flipping the ballSpeedX var
+        if (ballY > paddle1Y && ballY < paddle1Y + PADDLE_HEIGHT) {
+            ballSpeedX = -ballSpeedX;
+        } else {
+            ballReset();
+        }
     }
     // if the ball position equals the canvas hight, flip the direction by flipping the ballSpeedY var. 
     if (ballY > canvas.height) {
@@ -86,4 +99,6 @@ function draw() {
     drawRect(0, paddle1Y, 10, PADDLE_HEIGHT, 'white')
         // Draw the ball
     drawCircle(ballX, ballY, 10, 0);
+    // Draw the paddle on the right side    
+    drawRect((canvas.width - PADDLE_THICKNESS), paddle2Y, 10, PADDLE_HEIGHT, 'white')
 }
