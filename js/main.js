@@ -47,6 +47,7 @@ window.onload = function() {
     // rest the ball position
 function ballReset() {
     ballSpeedX = -ballSpeedX;
+    ballSpeedY = -4;
     ballX = canvas.width / 2;
     ballY = canvas.height / 2;
 }
@@ -70,6 +71,8 @@ function move() {
         // if the ball hits the paddle, flip the direction by flipping the ballSpeedX var
         if (ballY > paddle2Y && ballY < paddle2Y + PADDLE_HEIGHT) {
             ballSpeedX = -ballSpeedX;
+            var deltaY = ballY - (paddle1Y + PADDLE_HEIGHT / 2);
+            ballSpeedY = deltaY * 0.2;
         } else {
             ballReset();
             player2Score++;
@@ -80,6 +83,8 @@ function move() {
         // if the ball hits the paddle, flip the direction by flipping the ballSpeedX var
         if (ballY > paddle1Y && ballY < paddle1Y + PADDLE_HEIGHT) {
             ballSpeedX = -ballSpeedX;
+            var deltaY = ballY - (paddle2Y + PADDLE_HEIGHT / 2);
+            ballSpeedY = deltaY * 0.2;
         } else {
             ballReset();
             player1Score++;
