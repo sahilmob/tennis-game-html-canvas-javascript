@@ -24,6 +24,7 @@ function calcMousePos(e) {
 
 // make sure not to do any thing before page finish loading
 window.onload = function() {
+
         //fetch canvas from the dom
         canvas = document.getElementById('gameCanvas');
         //get drawing context on the canvas
@@ -39,6 +40,7 @@ window.onload = function() {
             var mousePos = calcMousePos(e);
             paddle1Y = mousePos.y - (PADDLE_HEIGHT / 2);
         });
+
     }
     // rest the ball position
 function ballReset() {
@@ -53,7 +55,12 @@ function move() {
 
     // if the ball position equals the canvas width, flip the direction by flipping the ballSpeedX var. 
     if (ballX > canvas.width) {
-        ballSpeedX = -ballSpeedX;
+        // if the ball hits the paddle, flip the direction by flipping the ballSpeedX var
+        if (ballY > paddle2Y && ballY < paddle2Y + PADDLE_HEIGHT) {
+            ballSpeedX = -ballSpeedX;
+        } else {
+            ballReset();
+        }
     }
 
     if (ballX < 0) {
@@ -96,9 +103,10 @@ function draw() {
     // Draw the canvas background
     drawRect(0, 0, canvas.width, canvas.height, 'black')
         // Draw the paddle on the left side
-    drawRect(0, paddle1Y, 10, PADDLE_HEIGHT, 'white')
+    drawRect(0, paddle1Y, PADDLE_THICKNESS, PADDLE_HEIGHT, 'white')
+        // Draw the paddle on the right side    
+    drawRect((canvas.width - PADDLE_THICKNESS), paddle2Y, PADDLE_THICKNESS, PADDLE_HEIGHT, 'white')
         // Draw the ball
     drawCircle(ballX, ballY, 10, 0);
-    // Draw the paddle on the right side    
-    drawRect((canvas.width - PADDLE_THICKNESS), paddle2Y, 10, PADDLE_HEIGHT, 'white')
+
 }
