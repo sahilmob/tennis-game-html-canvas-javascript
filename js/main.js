@@ -6,6 +6,8 @@ var ballSpeedX = 10;
 var ballSpeedY = 4;
 var paddle1Y = 250;
 var paddle2Y = 250;
+var player1Score = 0;
+var player2Score = 0;
 const PADDLE_HEIGHT = 100;
 const PADDLE_THICKNESS = 10;
 
@@ -70,6 +72,7 @@ function move() {
             ballSpeedX = -ballSpeedX;
         } else {
             ballReset();
+            player2Score++;
         }
     }
 
@@ -79,6 +82,7 @@ function move() {
             ballSpeedX = -ballSpeedX;
         } else {
             ballReset();
+            player1Score++;
         }
     }
     // if the ball position equals the canvas hight, flip the direction by flipping the ballSpeedY var. 
@@ -118,5 +122,10 @@ function draw() {
     drawRect((canvas.width - PADDLE_THICKNESS), paddle2Y, PADDLE_THICKNESS, PADDLE_HEIGHT, 'white')
         // Draw the ball
     drawCircle(ballX, ballY, 10, 0);
+
+    ctx.fillText("Score", 100, 10);
+    ctx.fillText(player2Score, 135, 10);
+    ctx.fillText(":", 150, 10);
+    ctx.fillText(player1Score, 165, 10);
 
 }
