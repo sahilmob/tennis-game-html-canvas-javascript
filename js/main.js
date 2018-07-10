@@ -49,9 +49,19 @@ function ballReset() {
     ballY = canvas.height / 2;
 }
 
+function computerMovement() {
+    var paddle2YCenter = paddle2Y + (PADDLE_HEIGHT / 2);
+    if (paddle2YCenter < ballY - 35) {
+        paddle2Y += 5;
+    } else if (paddle2YCenter > ballY + 35) {
+        paddle2Y -= 5;
+    }
+}
+
 function move() {
-    ballX = ballX + ballSpeedX;
-    ballY = ballY + ballSpeedY;
+    computerMovement();
+    ballX += ballSpeedX;
+    ballY += ballSpeedY;
 
     // if the ball position equals the canvas width, flip the direction by flipping the ballSpeedX var. 
     if (ballX > canvas.width) {
